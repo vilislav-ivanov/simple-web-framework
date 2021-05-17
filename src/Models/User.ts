@@ -12,6 +12,10 @@ export interface UserData {
 }
 
 export class User extends Model<UserData> {
+  setRandomAge = (): void => {
+    const randomAge = Math.floor(Math.random() * 100) + 1;
+    this.set({ age: randomAge });
+  };
   static BuildUser(userData: UserData): User {
     return new User(
       new DataManager(userData),

@@ -3,9 +3,8 @@ import { User, UserData } from './Models/User';
 // import { UserCollection } from './Models/UserCollection';
 
 const userModel = User.BuildUser({
-  firstName: 'Ganio Balkanski',
+  firstName: 'Gogo',
   age: 14114,
-  id: 10,
 });
 // userModel.listen('fetch', () => {
 //   console.log('Fetched user: ', userModel.get('firstName'));
