@@ -2,7 +2,8 @@ import { DataManager } from './DataManager';
 import { Model } from './Model';
 import { Eventing } from './Eventing';
 import { ApiSync } from './ApiSync';
-const userUrl = 'http://localhost:3000/users';
+import { UserCollection } from './UserCollection';
+const rootUrl = 'http://localhost:3000/users';
 
 export interface UserData {
   id?: number;
@@ -15,7 +16,10 @@ export class User extends Model<UserData> {
     return new User(
       new DataManager(userData),
       new Eventing(),
-      new ApiSync(userUrl)
+      new ApiSync(rootUrl)
     );
+  }
+  static BuildUserCollection(): UserCollection {
+    return new UserCollection(rootUrl, (userData) => User.BuildUser(userData));
   }
 }
