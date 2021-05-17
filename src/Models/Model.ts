@@ -1,7 +1,5 @@
 import { DataManager } from './DataManager';
-import { Eventing } from './Eventing';
-import { ApiSync, HasId } from './ApiSync';
-import { Events, Sync } from './Interface';
+import { Events, Sync, HasId } from './Interface';
 
 export class Model<T extends HasId> {
   constructor(

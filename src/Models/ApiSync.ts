@@ -1,9 +1,5 @@
-import { Sync } from './Interface';
+import { Sync, HasId } from './Interface';
 import axios, { AxiosPromise } from 'axios';
-
-export interface HasId {
-  id?: number;
-}
 
 export class ApiSync<T extends HasId> implements Sync<T> {
   constructor(private url: string) {}

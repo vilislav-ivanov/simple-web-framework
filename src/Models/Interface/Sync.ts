@@ -1,6 +1,10 @@
 import { AxiosPromise } from 'axios';
 
-export interface Sync<T> {
+export interface HasId {
+  id?: number;
+}
+
+export interface Sync<T extends HasId> {
   save(data: T): AxiosPromise<T>;
   fetch(id: number): AxiosPromise<T>;
 }
