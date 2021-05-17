@@ -1,16 +1,11 @@
-import { User } from '../Models/User';
+import { View } from './View';
+import { User, UserData } from '../Models/User';
 
-export class EditUser {
-  constructor(private parent: Element, private model: User) {
-    this.bindListeners();
-  }
-
+export class EditUser extends View<User, UserData> {
   template = (): string => {
     return `
       <div>
         <h1>User Form</h1>
-        <div>User name: ${this.model.get('firstName')}</div>
-        <div>User age: ${this.model.get('age')}</div>
         <button class="set-age">Set random age</button>
         <input type="text" class="firstName"
           value=${this.model.get('firstName')} />
@@ -27,12 +22,6 @@ export class EditUser {
       'click:.set-name': this.handleNameChangeClick,
       'click:.save': this.handleSaveClick,
     };
-  };
-
-  bindListeners = (): void => {
-    this.model.listen('change', () => {
-      this.render();
-    });
   };
 
   bindEvents = (fragment: DocumentFragment): void => {
@@ -57,16 +46,5 @@ export class EditUser {
 
   handleSaveClick = () => {
     this.model.save();
-  };
-
-  render = (): void => {
-    this.parent.innerHTML = '';
-
-    const tmp = document.createElement('template');
-    const tmp1 = document.createElement('input');
-    tmp.innerHTML = this.template();
-
-    this.bindEvents(tmp.content);
-    this.parent.append(tmp.content);
   };
 }

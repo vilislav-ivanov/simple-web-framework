@@ -1,5 +1,6 @@
 import { EditUser } from './Views/EditUser';
 import { User, UserData } from './Models/User';
+import { DisplayUser } from './Views/DisplayUser';
 // import { UserCollection } from './Models/UserCollection';
 
 const userModel = User.BuildUser({
@@ -22,8 +23,11 @@ const userModel = User.BuildUser({
 //   console.log('inside then on usercollection fetch');
 // });
 
-const rootElement = document.querySelector('#root');
-if (rootElement) {
-  const editUser = new EditUser(rootElement, userModel);
+const rootElement1 = document.querySelector('#root1');
+const rootElement2 = document.querySelector('#root2');
+if (rootElement1 && rootElement2) {
+  const editUser = new EditUser(rootElement1, userModel);
+  const displayUser = new DisplayUser(rootElement2, userModel);
+  displayUser.render();
   editUser.render();
 }
