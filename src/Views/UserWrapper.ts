@@ -4,18 +4,23 @@ import { User, UserData } from '../Models/User';
 import { View } from './View';
 
 export class UserWrapper extends View<User, UserData> {
-  childrenViews = (): View<User, UserData>[] => {
-    return [
-      new DisplayUser(document.getElementById('user-display'), this.model),
-      new EditUser(document.getElementById('user-edit'), this.model),
-    ];
+  defineRegions = (): { [key: string]: string } => {
+    return {
+      userDisplay: '.user-display',
+      userEdit: '.user-edit',
+    };
   };
+
+  addChildren = () => {
+    new EditUser(this.regions.userEdit, this.model).render();
+    new DisplayUser(this.regions.userDisplay, this.model).render();
+  };
+
   template(): string {
     return `
       <div>    
-        <div id="user-display"></div>
-        <div id="user-edit"></div>
-        <div id="">Yooo</div>
+        <div class="user-display"></div>
+        <div class="user-edit"></div>
       </div>
     `;
   }

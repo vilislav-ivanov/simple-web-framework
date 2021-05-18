@@ -6,19 +6,31 @@ export abstract class View<T extends Model<K>, K> {
   }
 
   abstract template(): string;
-  childrenViews = (): View<T, K>[] => {
-    return [];
+
+  regions: { [key: string]: Element } = {};
+  defineRegions = (): { [key: string]: string } => {
+    return {};
   };
+
   bindListeners = (): void => {
     this.model.listen('change', () => {
       this.render();
     });
   };
   bindEvents = (fragment: DocumentFragment): void => {};
-  bindChildrens = (): void => {
-    const childrenViews = this.childrenViews();
-    childrenViews.forEach((view) => view.render());
+  populateRegions = (fragment: DocumentFragment): void => {
+    const regions = this.defineRegions();
+
+    for (let key in regions) {
+      const element = fragment.querySelector(regions[key]);
+
+      if (element) {
+        this.regions[key] = element;
+      }
+    }
   };
+
+  addChildren = (): void => {};
 
   render = (): void => {
     this.parent.innerHTML = '';
@@ -27,7 +39,10 @@ export abstract class View<T extends Model<K>, K> {
     tmp.innerHTML = this.template();
 
     this.bindEvents(tmp.content);
+    this.populateRegions(tmp.content);
+
+    this.addChildren();
+
     this.parent.append(tmp.content);
-    this.bindChildrens();
   };
 }
