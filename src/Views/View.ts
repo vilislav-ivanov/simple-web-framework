@@ -6,13 +6,19 @@ export abstract class View<T extends Model<K>, K> {
   }
 
   abstract template(): string;
-
+  childrenViews = (): View<T, K>[] => {
+    return [];
+  };
   bindListeners = (): void => {
     this.model.listen('change', () => {
       this.render();
     });
   };
   bindEvents = (fragment: DocumentFragment): void => {};
+  bindChildrens = (): void => {
+    const childrenViews = this.childrenViews();
+    childrenViews.forEach((view) => view.render());
+  };
 
   render = (): void => {
     this.parent.innerHTML = '';
@@ -21,7 +27,7 @@ export abstract class View<T extends Model<K>, K> {
     tmp.innerHTML = this.template();
 
     this.bindEvents(tmp.content);
-
     this.parent.append(tmp.content);
+    this.bindChildrens();
   };
 }
