@@ -1,6 +1,7 @@
 import { Model } from '../Models/Model';
 
 export abstract class View<T extends Model<K>, K> {
+  eventId: number;
   constructor(protected parent: Element, protected model: T) {
     this.bindListeners();
   }
@@ -13,8 +14,10 @@ export abstract class View<T extends Model<K>, K> {
   };
 
   bindListeners = (): void => {
-    this.model.listen('change', () => {
+    this.eventId = this.model.listen('change', () => {
       this.render();
+      // remove current change event listener
+      // this.model.removeEvent('change');
     });
   };
   bindEvents = (fragment: DocumentFragment): void => {};
@@ -32,8 +35,13 @@ export abstract class View<T extends Model<K>, K> {
 
   addChildren = (): void => {};
 
-  render = (): void => {
+  clear = (): void => {
     this.parent.innerHTML = '';
+    this.model.clearEvent('change', this.eventId);
+  };
+
+  render = (): void => {
+    this.clear();
 
     const tmp = document.createElement('template');
     tmp.innerHTML = this.template();
