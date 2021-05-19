@@ -37,4 +37,10 @@ export class Model<T extends HasId> {
     this.dataManager.set(response.data);
     this.trigger('change');
   };
+  delete = async (id: number): Promise<void> => {
+    const isDeleted = await this.sync.delete(id);
+    if (isDeleted) {
+      this.trigger('change');
+    }
+  };
 }

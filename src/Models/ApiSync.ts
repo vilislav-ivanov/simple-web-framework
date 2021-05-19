@@ -14,4 +14,8 @@ export class ApiSync<T extends HasId> implements Sync<T> {
   fetch(id: number): AxiosPromise<T> {
     return axios.get(`${this.url}/${id}`);
   }
+  async delete(id: number): Promise<boolean> {
+    const response = await axios.delete(`${this.url}/${id}`);
+    return response.status === 200;
+  }
 }

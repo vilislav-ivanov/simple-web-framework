@@ -12,6 +12,7 @@ export class EditUser extends View<User, UserData> {
         <button class="set-name">Change name</button>
         <br />
         <button class="save">Save</button>
+        <button class="delete">Delete</button>
       </div>
     `;
   };
@@ -21,6 +22,7 @@ export class EditUser extends View<User, UserData> {
       'click:.set-age': this.handleRandomAgeClick,
       'click:.set-name': this.handleNameChangeClick,
       'click:.save': this.handleSaveClick,
+      'click:.delete': this.handleDeleteClick,
     };
   };
 
@@ -46,5 +48,9 @@ export class EditUser extends View<User, UserData> {
 
   handleSaveClick = () => {
     this.model.save();
+  };
+
+  handleDeleteClick = async () => {
+    await this.model.delete(this.model.get('id'));
   };
 }
