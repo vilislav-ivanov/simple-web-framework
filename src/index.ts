@@ -1,6 +1,7 @@
 import { User, UserData } from './Models/User';
 import { UserWrapper } from './Views/UserWrapper';
 // import { UserCollection } from './Models/UserCollection';
+import { UserCollectionView } from './Views/UserCollectionView';
 
 const userModel = User.BuildUser({
   firstName: 'Gogo',
@@ -16,7 +17,6 @@ const userModel = User.BuildUser({
 // userModel.save().then(() => console.log('save().then()'));
 // // userModel.fetch(10).then(() => console.log('fetch().then()'));
 
-// const userCollection = User.BuildUserCollection();
 // userCollection.events.listen('fetch', () => console.log(userCollection.data));
 // userCollection.fetch().then(() => {
 //   console.log('inside then on usercollection fetch');
@@ -24,9 +24,18 @@ const userModel = User.BuildUser({
 
 const rootElement = document.querySelector('#root');
 if (rootElement) {
-  const userWrapper = new UserWrapper(
-    rootElement,
-    User.BuildUser({ firstName: 'GOGO' })
-  );
-  userWrapper.render();
+  // const userWrapper = new UserWrapper(
+  //   rootElement,
+  //   User.BuildUser({ firstName: 'GOGO' })
+  // );
+  // userWrapper.render();
+
+  const userCollection = User.BuildUserCollection();
+  userCollection.fetch().then(() => {
+    const userCollectionView = new UserCollectionView(
+      rootElement,
+      userCollection
+    );
+    userCollectionView.render();
+  });
 }
