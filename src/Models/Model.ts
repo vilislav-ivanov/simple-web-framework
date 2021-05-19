@@ -24,14 +24,17 @@ export class Model<T extends HasId> {
   get trigger() {
     return this.events.trigger;
   }
+  get clearEvent() {
+    return this.events.clearEvent;
+  }
   save = async () => {
     const response = await this.sync.save(this.dataManager.getAll());
     this.dataManager.set(response.data);
-    this.trigger('save');
+    this.trigger('change');
   };
   fetch = async (id: number): Promise<void> => {
     const response = await this.sync.fetch(id);
     this.dataManager.set(response.data);
-    this.trigger('fetch');
+    this.trigger('change');
   };
 }
