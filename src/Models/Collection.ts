@@ -16,6 +16,11 @@ export class Collection<T extends Model<K>, K> {
     this.data.forEach((model: T) => {
       model.listen('change', () => {
         this.events.trigger('change');
+        // fetching after every change but should fetch only after delete event
+        // this.fetch();
+      });
+      model.listen('delete', () => {
+        this.events.trigger('change');
         this.fetch();
       });
     });

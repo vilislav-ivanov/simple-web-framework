@@ -40,7 +40,7 @@ export class Model<T extends HasId> {
   delete = async (id: number): Promise<void> => {
     const isDeleted = await this.sync.delete(id);
     if (isDeleted) {
-      this.trigger('change');
+      this.trigger('delete');
     }
   };
 }
